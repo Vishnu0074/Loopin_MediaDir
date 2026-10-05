@@ -5,8 +5,8 @@ const lenis=(!reduced&&typeof window.Lenis==='function')?new window.Lenis({autoR
 function splitLetters(el){if(el.dataset.splitDone)return;el.dataset.splitDone='1';const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(node=>{const f=document.createDocumentFragment();for(const c of node.textContent){const s=document.createElement('span');s.className=c.trim()?'letter':'letter space';s.textContent=c.trim()?c:'\u00a0';f.appendChild(s)}node.parentNode.replaceChild(f,node)})}
 document.querySelectorAll('[data-letters]').forEach(splitLetters);
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('is-visible','letters-visible');observer.unobserve(e.target)}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-document.querySelectorAll('.reveal,.reveal-scale,[data-letters]').forEach(el=>observer.observe(el));root.classList.add('motion-ready');
-document.querySelectorAll('[data-letters] .letter').forEach((el,i)=>el.style.transitionDelay=Math.min(i*.018,.65)+'s');
+document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));root.classList.add('motion-ready');
+
 
 const cursor=document.querySelector('.cursor');if(cursor)window.addEventListener('pointermove',e=>cursor.style.transform=`translate3d(${e.clientX-3}px,${e.clientY-3}px,0)`);
 const dots=[...document.querySelectorAll('.progress-dots i')],scenes=[...document.querySelectorAll('[data-scene]')];
