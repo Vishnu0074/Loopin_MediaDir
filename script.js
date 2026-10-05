@@ -1,4 +1,4 @@
-document.documentElement.classList.add('js');
+const root=document.documentElement;
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const hasLenis = typeof window.Lenis === 'function';
@@ -51,6 +51,7 @@ const revealObserver=new IntersectionObserver(entries=>{
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 
 document.querySelectorAll('[data-aos],[data-letter]').forEach(el=>revealObserver.observe(el));
+root.classList.add('motion-ready');
 
 document.querySelectorAll('[data-letter] .letter').forEach((letter,index)=>{
   letter.style.transitionDelay=`${Math.min(index*.022,.75)}s`;
