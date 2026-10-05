@@ -125,3 +125,20 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
     }
   });
 });
+/* Mobile navigation */
+const menuToggle=document.querySelector('.menu-toggle');
+const mobileMenu=document.querySelector('.mobile-menu');
+if(menuToggle && mobileMenu){
+  const closeMenu=()=>{
+    mobileMenu.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded','false');
+    menuToggle.textContent='Menu';
+  };
+  menuToggle.addEventListener('click',()=>{
+    const open=!mobileMenu.classList.contains('is-open');
+    mobileMenu.classList.toggle('is-open',open);
+    menuToggle.setAttribute('aria-expanded',String(open));
+    menuToggle.textContent=open?'Close':'Menu';
+  });
+  mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+}
