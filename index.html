@@ -64,21 +64,24 @@
 <section class="scene player-scene" data-scene="2">
   <div class="scene-number">02</div>
   <div class="player-background"><img src="assets/music-tunnel.svg" alt=""></div>
+  <audio id="previewAudio" preload="none"></audio>
   <div class="player-device">
     <div class="device-top"><span>Loopin</span><span>•••</span></div>
     <div class="device-art"><img id="playerArt" src="/Loopin_MediaDir/Loopin_Artists/yesudas.jpg" alt=""></div>
-    <p class="device-label">NOW PLAYING</p>
+    <p class="device-label">APPLE MUSIC PREVIEW</p>
     <h2 id="playerTitle">Malare</h2>
     <p id="playerArtist">Vijay Yesudas · Premam</p>
-    <div class="device-progress"><i></i></div>
-    <div class="device-times"><span>1:42</span><span>4:34</span></div>
-    <div class="device-controls"><button id="prev" aria-label="Previous">↶</button><button id="play" class="main-play" aria-label="Play">▶</button><button id="next" aria-label="Next">↷</button></div>
+    <div class="device-progress"><i id="playerProgress"></i></div>
+    <div class="device-times"><span id="playerCurrentTime">0:00</span><span id="playerDuration">0:30</span></div>
+    <div class="device-controls"><button id="prev" aria-label="Previous">↶</button><button id="play" class="main-play" aria-label="Play preview">▶</button><button id="next" aria-label="Next">↷</button></div>
     <div class="device-next"><small>UP NEXT</small><strong id="nextTrack">Pavizha Mazha</strong></div>
   </div>
   <div class="player-copy">
     <p class="overline reveal">YOUR LISTENING SPACE</p>
     <h2 class="script-heading reveal-scale">Press play.<br><em>lose track of time.</em></h2>
     <p class="reveal">A focused player, a queue that follows you and controls that stay out of the way.</p>
+    <div class="preview-meta"><span id="previewStatus">Ready for a 30-second preview.</span><a id="storeLink" href="#" target="_blank" rel="noopener noreferrer">Listen on Apple Music ↗</a></div>
+    <small class="preview-attribution">Preview provided courtesy of iTunes.</small>
   </div>
 </section>
 
