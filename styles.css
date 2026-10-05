@@ -319,3 +319,5 @@ footer{
   footer span:nth-child(2){display:none}
   .cursor{display:none}
 }
+[data-parallax]{transform:translate3d(0,var(--parallax-y,0),0)}
+.opening-word{--parallax-y:0}
