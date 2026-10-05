@@ -1,144 +1,80 @@
 const root=document.documentElement;
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lenis=(!reduced&&typeof window.Lenis==='function')?new window.Lenis({autoRaf:true,anchors:true,lerp:.085,smoothWheel:true,syncTouch:true}):null;
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const hasLenis = typeof window.Lenis === 'function';
-const lenis = (!prefersReducedMotion && hasLenis) ? new window.Lenis({
-  autoRaf:true,
-  anchors:true,
-  lerp:.085,
-  smoothWheel:true,
-  syncTouch:true
-}) : null;
-
-const cursor=document.querySelector('.cursor');
-if(cursor){
-  window.addEventListener('pointermove',e=>{
-    cursor.style.transform=`translate3d(${e.clientX-4}px,${e.clientY-4}px,0)`;
-  });
-}
-
-/* Letter-by-letter headings. Only the display headings use this;
-   normal body text remains untouched. */
 function splitLetters(el){
   if(el.dataset.splitDone)return;
-  el.dataset.splitDone='true';
-
+  el.dataset.splitDone='1';
   const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
-  const nodes=[];
-  while(walker.nextNode())nodes.push(walker.currentNode);
-
+  const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
   nodes.forEach(node=>{
-    const fragment=document.createDocumentFragment();
+    const frag=document.createDocumentFragment();
     for(const char of node.textContent){
       const span=document.createElement('span');
       span.className=char.trim()?'letter':'letter space';
       span.textContent=char.trim()?char:'\u00a0';
-      fragment.appendChild(span);
+      frag.appendChild(span);
     }
-    node.parentNode.replaceChild(fragment,node);
+    node.parentNode.replaceChild(frag,node);
   });
 }
-document.querySelectorAll('[data-letter]').forEach(splitLetters);
+document.querySelectorAll('[data-letters]').forEach(splitLetters);
 
-/* One observer controls all reveal animations.
-   Elements are observed once and never fight a second animation system. */
-const revealObserver=new IntersectionObserver(entries=>{
+const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(!entry.isIntersecting)return;
     entry.target.classList.add('is-visible','letters-visible');
-    revealObserver.unobserve(entry.target);
+    observer.unobserve(entry.target);
   });
-},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-
-document.querySelectorAll('[data-aos],[data-letter]').forEach(el=>revealObserver.observe(el));
+},{threshold:.1,rootMargin:'0px 0px -7% 0px'});
+document.querySelectorAll('.reveal,.reveal-scale,[data-letters]').forEach(el=>observer.observe(el));
 root.classList.add('motion-ready');
 
-document.querySelectorAll('[data-letter] .letter').forEach((letter,index)=>{
-  letter.style.transitionDelay=`${Math.min(index*.022,.75)}s`;
-});
+document.querySelectorAll('[data-letters] .letter').forEach((el,i)=>el.style.transitionDelay=Math.min(i*.018,.65)+'s');
 
-/* Small scroll-linked movement. It never writes to elements that also
-   use transform-based AOS, avoiding the previous transform conflict. */
-const parallaxItems=[...document.querySelectorAll('[data-parallax]')];
-function updateParallax(){
-  parallaxItems.forEach(el=>{
-    if(!el.classList.contains('is-visible') && el.hasAttribute('data-letter'))return;
-    const rect=el.getBoundingClientRect();
-    if(rect.bottom<0||rect.top>window.innerHeight)return;
-    const speed=Number(el.dataset.parallax||.02);
-    const progress=(window.innerHeight/2-(rect.top+rect.height/2));
-    el.style.setProperty('--parallax-y',`${progress*speed}px`);
-  });
-}
-if(lenis){
-  lenis.on('scroll',updateParallax);
-}else{
-  window.addEventListener('scroll',updateParallax,{passive:true});
-}
-requestAnimationFrame(updateParallax);
+const cursor=document.querySelector('.cursor');
+if(cursor)window.addEventListener('pointermove',e=>cursor.style.transform=`translate3d(${e.clientX-4}px,${e.clientY-4}px,0)`);
 
-/* Interactive queue preview */
-const songs=[...document.querySelectorAll('.song')];
-const title=document.getElementById('trackTitle');
-const artist=document.getElementById('trackArtist');
-const play=document.getElementById('play');
-let playing=false;
-
-function choose(song){
-  songs.forEach(item=>item.classList.remove('selected'));
-  song.classList.add('selected');
-  if(title)title.textContent=song.dataset.title;
-  if(artist)artist.textContent=song.dataset.artist;
-  playing=true;
-  if(play)play.textContent='Ⅱ';
+const tracks=[
+ {title:'Malare',artist:'Vijay Yesudas · Premam',image:'assets/Loopin_Artists/yesudas.jpg',next:'Pavizha Mazha'},
+ {title:'Pavizha Mazha',artist:'KS Harisankar · Athiran',image:'assets/Loopin_Artists/sithara.png',next:'Darshana'},
+ {title:'Darshana',artist:'Hesham Abdul Wahab · Hridayam',image:'assets/Loopin_Artists/vithu.webp',next:'Aaradhike'},
+ {title:'Aaradhike',artist:'Sooraj Santhosh · Ambili',image:'assets/Loopin_Artists/chithra.webp',next:'Malare'}
+];
+let trackIndex=0,playing=false;
+const title=document.getElementById('trackTitle'),artist=document.getElementById('trackArtist'),cover=document.querySelector('#cover img'),queueNext=document.getElementById('queueNext'),play=document.getElementById('play');
+function setTrack(i){
+  trackIndex=(i+tracks.length)%tracks.length;
+  const t=tracks[trackIndex];
+  if(title)title.textContent=t.title;if(artist)artist.textContent=t.artist;if(cover)cover.src=t.image;if(queueNext)queueNext.textContent=t.next;
+  document.querySelectorAll('.story-step').forEach((s,n)=>s.classList.toggle('active',n===trackIndex));
 }
-songs.forEach(song=>song.addEventListener('click',()=>choose(song)));
+function togglePlay(){playing=!playing;if(play)play.textContent=playing?'Ⅱ':'▶'}
+play?.addEventListener('click',togglePlay);
+document.getElementById('next')?.addEventListener('click',()=>setTrack(trackIndex+1));
+document.getElementById('prev')?.addEventListener('click',()=>setTrack(trackIndex-1));
 
-if(play){
-  play.addEventListener('click',()=>{
-    playing=!playing;
-    play.textContent=playing?'Ⅱ':'▶';
-  });
-}
-const next=document.getElementById('next');
-const prev=document.getElementById('prev');
-if(next)next.addEventListener('click',()=>{
-  const index=songs.findIndex(s=>s.classList.contains('selected'));
-  choose(songs[(index+1+songs.length)%songs.length]);
-});
-if(prev)prev.addEventListener('click',()=>{
-  const index=songs.findIndex(s=>s.classList.contains('selected'));
-  choose(songs[(index-1+songs.length)%songs.length]);
-});
+const steps=[...document.querySelectorAll('.story-step')];
+const storyObserver=new IntersectionObserver(entries=>entries.forEach(e=>{
+  if(e.isIntersecting){const i=steps.indexOf(e.target);if(i>=0)setTrack(i)}
+}),{threshold:.65});
+steps.forEach(s=>storyObserver.observe(s));
 
-/* Lenis anchors with a safe fallback */
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
-  link.addEventListener('click',e=>{
-    const selector=link.getAttribute('href');
-    const target=document.querySelector(selector);
-    if(!target)return;
-    e.preventDefault();
-    if(lenis) {
-      lenis.scrollTo(target,{offset:-35,duration:1.15});
-    } else {
-      target.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth',block:'start'});
-    }
-  });
-});
-/* Mobile navigation */
-const menuToggle=document.querySelector('.menu-toggle');
-const mobileMenu=document.querySelector('.mobile-menu');
-if(menuToggle && mobileMenu){
-  const closeMenu=()=>{
-    mobileMenu.classList.remove('is-open');
-    menuToggle.setAttribute('aria-expanded','false');
-    menuToggle.textContent='Menu';
-  };
-  menuToggle.addEventListener('click',()=>{
-    const open=!mobileMenu.classList.contains('is-open');
-    mobileMenu.classList.toggle('is-open',open);
-    menuToggle.setAttribute('aria-expanded',String(open));
-    menuToggle.textContent=open?'Close':'Menu';
-  });
-  mobileMenu.querySelectorAll('a').forEach(link=>link.addEventListener('click',closeMenu));
+document.querySelectorAll('.art-card').forEach(card=>card.addEventListener('click',()=>{
+  if(cover)cover.src=card.dataset.image;
+  if(title)title.textContent=card.dataset.title;
+  if(artist)artist.textContent=card.dataset.artist;
+  if(queueNext)queueNext.textContent='Your next discovery';
+  document.querySelector('#experience')?.scrollIntoView({behavior:reduced?'auto':'smooth'});
+}));
+
+const menu=document.querySelector('.mobile-menu'),toggle=document.querySelector('.menu-toggle');
+if(menu&&toggle){
+ const close=()=>{menu.classList.remove('is-open');toggle.setAttribute('aria-expanded','false');toggle.textContent='Menu'};
+ toggle.addEventListener('click',()=>{const open=!menu.classList.contains('is-open');menu.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',open);toggle.textContent=open?'Close':'Menu'});
+ menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
 }
+document.querySelectorAll('a[href^="#"]').forEach(link=>link.addEventListener('click',e=>{
+ const target=document.querySelector(link.getAttribute('href'));if(!target)return;e.preventDefault();
+ if(lenis)lenis.scrollTo(target,{offset:-30,duration:1.1});else target.scrollIntoView({behavior:reduced?'auto':'smooth'});
+}));
