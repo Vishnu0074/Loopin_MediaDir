@@ -241,17 +241,17 @@ footer{
 }
 
 /* Stable scroll reveals */
-.js [data-aos]{
+.motion-ready [data-aos]{
   opacity:0;transform:translate3d(0,60px,0);
   transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .95s cubic-bezier(.16,1,.3,1)
 }
-.js [data-aos="fade-left"]{transform:translate3d(70px,0,0)}
-.js [data-aos="fade-right"]{transform:translate3d(-70px,0,0)}
-.js [data-aos="fade-down"]{transform:translate3d(0,-60px,0)}
-.js [data-aos="zoom"]{transform:scale(.9)}
-.js [data-aos].is-visible{opacity:1;transform:none}
-.js [data-aos="media"]{transform:scale(1.12);transition-duration:1.25s}
-.js [data-aos="media"].is-visible{transform:scale(1)}
+.motion-ready [data-aos="fade-left"]{transform:translate3d(70px,0,0)}
+.motion-ready [data-aos="fade-right"]{transform:translate3d(-70px,0,0)}
+.motion-ready [data-aos="fade-down"]{transform:translate3d(0,-60px,0)}
+.motion-ready [data-aos="zoom"]{transform:scale(.9)}
+.motion-ready [data-aos].is-visible{opacity:1;transform:none}
+.motion-ready [data-aos="media"]{transform:scale(1.12);transition-duration:1.25s}
+.motion-ready [data-aos="media"].is-visible{transform:scale(1)}
 .js [data-delay="1"]{transition-delay:.08s}
 .js [data-delay="2"]{transition-delay:.16s}
 .js [data-delay="3"]{transition-delay:.24s}
@@ -261,14 +261,14 @@ footer{
 
 /* Display typography: each character enters independently */
 [data-letter]{overflow:visible}
-[data-letter] .letter{
+ .motion-ready [data-letter] .letter{
   display:inline-block;opacity:0;
   transform:translate3d(0,105%,0) rotate(3deg);
   filter:blur(5px);
   transition:opacity .5s ease,transform .72s cubic-bezier(.16,1,.3,1),filter .72s ease
 }
 [data-letter] .letter.space{width:.25em}
-[data-letter].letters-visible .letter{opacity:1;transform:none;filter:none}
+ .motion-ready [data-letter].letters-visible .letter{opacity:1;transform:none;filter:none}
 [data-letter] .letter:nth-child(2n){transition-duration:.8s}
 [data-letter] .letter:nth-child(3n){transition-duration:.9s}
 
@@ -276,7 +276,7 @@ footer{
 
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .js [data-aos],[data-letter] .letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+  .motion-ready [data-aos],[data-letter] .letter{opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
 }
 @media(max-width:800px){
   .site-header{height:66px;padding:0 20px}
