@@ -3,26 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Loopin — Music, as it should be</title>
-<meta name="description" content="Loopin is a free, focused music app for discovering, queuing and listening to the music you love.">
-<meta name="robots" content="index,follow">
+<title>Loopin — Music streaming app | Because one play is never enough</title>
+<meta name="description" content="Loopin is a focused music app for discovering, searching, playing and queuing the music you love. Because one play is never enough.">
+<meta name="author" content="Loopin">
+<meta name="application-name" content="Loopin">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <link rel="canonical" href="https://vishnu0074.github.io/Loopin_MediaDir/">
-<meta name="theme-color" content="#f4f1ec">
-<meta property="og:title" content="Loopin — Music, as it should be">
-<meta property="og:description" content="A smooth, focused music experience built around listening.">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+<link rel="icon" href="assets/loopin-logo.svg" type="image/svg+xml">
+
+<meta property="og:locale" content="en_US">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Loopin">
+<meta property="og:title" content="Loopin — Because one play is never enough">
+<meta property="og:description" content="A focused music experience for discovering, playing and keeping the songs you love close.">
 <meta property="og:url" content="https://vishnu0074.github.io/Loopin_MediaDir/">
+<meta property="og:image" content="https://vishnu0074.github.io/Loopin_MediaDir/assets/music-waves.svg">
+<meta property="og:image:alt" content="Loopin neon pink music waveform">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loopin — Because one play is never enough">
+<meta name="twitter:description" content="A focused music experience for discovering, playing and keeping the songs you love close.">
+<meta name="twitter:image" content="https://vishnu0074.github.io/Loopin_MediaDir/assets/music-waves.svg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebSite",
+      "@id":"https://vishnu0074.github.io/Loopin_MediaDir/#website",
+      "url":"https://vishnu0074.github.io/Loopin_MediaDir/",
+      "name":"Loopin",
+      "description":"Loopin music app — because one play is never enough."
+    },
+    {
+      "@type":"SoftwareApplication",
+      "@id":"https://vishnu0074.github.io/Loopin_MediaDir/#app",
+      "name":"Loopin",
+      "applicationCategory":"MusicApplication",
+      "operatingSystem":"Android",
+      "description":"A focused music app for discovering, playing and queuing music.",
+      "url":"https://vishnu0074.github.io/Loopin_MediaDir/",
+      "image":"https://vishnu0074.github.io/Loopin_MediaDir/assets/loopin-logo.svg"
+    }
+  ]
+}
+</script>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="cursor"></div>
+
 <header class="site-header">
-  <a class="logo" href="#top">loopin<span>®</span></a>
+  <a class="logo" href="#top" aria-label="Loopin home"><img src="assets/loopin-logo.svg" alt="Loopin logo"></a>
   <div class="header-right">
     <a href="#why">Why Loopin?</a>
     <a href="#features">Features</a>
     <a href="#app">The app</a>
-    <a class="pill" href="https://github.com/Vishnu0074/loopin" target="_blank" rel="noreferrer">GitHub ↗</a>
+    <a class="pill" href="https://github.com/Vishnu0074/loopin" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
   </div>
 </header>
 
@@ -30,61 +71,68 @@
 <section class="opening">
   <div class="scroll-note">scroll<br>to explore <span>↓</span></div>
   <div class="opening-copy">
-    <p class="tiny">THE MUSIC APP</p>
-    <h1>Your music<br><span>as it should be.</span></h1>
-    <p class="intro">Loopin is a focused music experience built to get out of your way. Discover music, build your queue and let the listening take over.</p>
+    <p class="tiny" data-aos="fade-right">THE MUSIC APP</p>
+    <h1 data-letter="true">Your music<br><span>as it should be.</span></h1>
+    <p class="intro" data-aos="fade-up">Discover songs. Find artists. Build the next moment. <strong>Because one play is never enough.</strong></p>
   </div>
-  <div class="opening-word">loopin</div>
+  <img class="opening-media" data-aos="zoom" src="assets/music-waves.svg" alt="Abstract neon pink music waves">
+  <div class="opening-word" data-parallax=".035">loopin</div>
 </section>
 
 <section class="statement" id="why">
-  <div class="section-tag">01 / WHY LOOPIN?</div>
+  <div class="section-tag" data-aos="fade-right">01 / WHY LOOPIN?</div>
   <div class="statement-body">
-    <p class="lead">Music apps became complicated.<br><em>We wanted listening to stay simple.</em></p>
+    <p class="lead" data-letter="true">Music is more than a track.<br><em>It's a feeling you play again.</em></p>
     <div class="statement-copy">
-      <p>Loopin puts the music first. No crowded interface. No endless layers between you and the next song. Just a clean place to discover, play and keep moving.</p>
-      <a href="#features" class="text-link">See what it unlocks <span>↘</span></a>
+      <p data-aos="fade-up">Loopin puts music first. Search for the songs that are stuck in your head, discover something new, queue what comes next and stay inside the moment.</p>
+      <a href="#features" class="text-link" data-aos="fade-left">See what makes it different <span>↘</span></a>
     </div>
   </div>
 </section>
 
+<section class="visual-break">
+  <div class="visual-meta" data-aos="fade-right">SOUND / 01</div>
+  <img data-aos="media" src="assets/music-waves.svg" alt="Flowing neon pink sound waves">
+  <div class="visual-caption" data-aos="fade-up">Let the sound move.</div>
+</section>
+
 <section class="manifesto">
-  <div class="manifesto-line">so we built</div>
-  <div class="manifesto-word">music<span>°</span></div>
-  <div class="manifesto-line right">as it should be</div>
+  <div class="manifesto-line" data-aos="fade-up">so we built</div>
+  <div class="manifesto-word" data-letter="true" data-parallax=".018">music<span>°</span></div>
+  <div class="manifesto-line right" data-aos="fade-up">because one play is never enough</div>
 </section>
 
 <section class="transition">
-  <div class="transition-word">Enter</div>
-  <div class="transition-name">Loopin</div>
-  <div class="transition-copy">A free music app made for the part that matters — <strong>listening.</strong></div>
+  <div class="transition-word" data-aos="fade-down">Enter</div>
+  <div class="transition-name" data-letter="true">Loopin</div>
+  <div class="transition-copy" data-aos="fade-up">A music app made for the part that matters — <strong>listening.</strong></div>
 </section>
 
 <section class="features" id="features">
-  <div class="section-tag">02 / WHAT YOU GET</div>
+  <div class="section-tag" data-aos="fade-right">02 / THE MUSIC EXPERIENCE</div>
   <div class="feature-intro">
-    <h2>Loopin brings<br><i>the flow.</i></h2>
-    <p>Small, deliberate features that make everyday listening feel natural.</p>
+    <h2 data-letter="true">Loopin brings<br><i>the flow.</i></h2>
+    <p data-aos="fade-left">Everything you need to stay close to the music, without making the music fight for your attention.</p>
   </div>
   <div class="feature-list">
-    <article><span>01</span><div><h3>Discover without friction</h3><p>Search for songs and artists quickly, then get straight into listening.</p></div></article>
-    <article><span>02</span><div><h3>Build your queue</h3><p>Choose what comes next and keep your session moving without interruptions.</p></div></article>
-    <article><span>03</span><div><h3>Focused playback</h3><p>A player designed around the track instead of a wall of controls.</p></div></article>
-    <article><span>04</span><div><h3>Your music, close</h3><p>Keep the songs and artists you return to within easy reach.</p></div></article>
-    <article><span>05</span><div><h3>Made for the moment</h3><p>Minimal surfaces, responsive interactions and a calm visual language.</p></div></article>
-    <article><span>06</span><div><h3>Built to keep moving</h3><p>Fast transitions, persistent playback and a listening flow that stays with you.</p></div></article>
+    <article data-aos="clip-right"><span>01</span><div><h3>Find what you want</h3><p>Search songs, albums and artists quickly, then get straight into playback.</p></div></article>
+    <article data-aos="clip-right"><span>02</span><div><h3>Discover what comes next</h3><p>Explore music without losing the track that brought you there.</p></div></article>
+    <article data-aos="clip-right"><span>03</span><div><h3>Build your queue</h3><p>Choose what plays next and shape every listening session your way.</p></div></article>
+    <article data-aos="clip-right"><span>04</span><div><h3>Stay in the groove</h3><p>Focused playback keeps controls simple while your music stays front and center.</p></div></article>
+    <article data-aos="clip-right"><span>05</span><div><h3>Keep your favorites close</h3><p>Return to the songs and artists that belong to your everyday rotation.</p></div></article>
+    <article data-aos="clip-right"><span>06</span><div><h3>One more play</h3><p>Fast transitions, persistent playback and a flow designed around repeat listening.</p></div></article>
   </div>
 </section>
 
 <section class="app-section" id="app">
-  <div class="section-tag">03 / INSIDE LOOPIN</div>
+  <div class="section-tag" data-aos="fade-right">03 / INSIDE LOOPIN</div>
   <div class="app-head">
-    <h2>One place.<br><i>Every mood.</i></h2>
-    <p>Explore the interface through a small interactive preview.</p>
+    <h2 data-letter="true">One place.<br><i>Every mood.</i></h2>
+    <p data-aos="fade-left">A glimpse of the listening experience. Pick a track, shape the queue and keep going.</p>
   </div>
   <div class="app-stage">
     <div class="stage-glow"></div>
-    <div class="app-window">
+    <div class="app-window" data-aos="zoom">
       <div class="app-bar"><span>LOOPIN</span><span>● ● ●</span></div>
       <div class="app-content">
         <div class="app-sidebar"><b>Home</b><span>Discover</span><span>Library</span><span>Queue</span></div>
@@ -94,7 +142,7 @@
           <h3 id="trackTitle">Malare</h3>
           <p id="trackArtist">Vijay Yesudas · Premam</p>
           <div class="player-line"><span></span></div>
-          <div class="player-controls"><button id="prev">↶</button><button id="play" class="play">▶</button><button id="next">↷</button></div>
+          <div class="player-controls"><button id="prev" aria-label="Previous track">↶</button><button id="play" class="play" aria-label="Play">▶</button><button id="next" aria-label="Next track">↷</button></div>
         </div>
         <div class="queue">
           <small>UP NEXT</small>
@@ -108,30 +156,42 @@
   </div>
 </section>
 
+<section class="visual-break visual-break--vinyl">
+  <div class="visual-meta" data-aos="fade-left">SOUND / 02</div>
+  <img data-aos="media" src="assets/vinyl.svg" alt="Vinyl record illuminated by neon pink light">
+  <div class="visual-caption" data-aos="fade-up">Press play. Then play it again.</div>
+</section>
+
 <section class="big-type">
-  <p>good music</p>
-  <h2>should feel<br><span>effortless.</span></h2>
+  <p data-aos="fade-right">music should feel</p>
+  <h2 data-letter="true" data-parallax=".012">effortless.<br><span>and endless.</span></h2>
+</section>
+
+<section class="visual-break visual-break--tunnel">
+  <div class="visual-meta" data-aos="fade-right">SOUND / 03</div>
+  <img data-aos="media" src="assets/music-tunnel.svg" alt="Neon pink music tunnel">
+  <div class="visual-caption" data-aos="fade-up">One play becomes another.</div>
 </section>
 
 <section class="open-source">
-  <div class="section-tag">04 / THE PROJECT</div>
+  <div class="section-tag" data-aos="fade-right">04 / THE PROJECT</div>
   <div class="open-grid">
     <div>
-      <h2>Loopin is<br><i>open to ideas.</i></h2>
-      <p>The app is an evolving project. Explore the code, follow the work or build on the idea yourself.</p>
+      <h2 data-letter="true">Loopin is<br><i>made for music.</i></h2>
+      <p data-aos="fade-up">An evolving music project built around discovery, playback and the simple idea that listening should feel effortless.</p>
     </div>
-    <a class="round-link" href="https://github.com/Vishnu0074/loopin" target="_blank" rel="noreferrer"><span>View<br>on GitHub</span><b>↗</b></a>
+    <a class="round-link" data-aos="zoom" href="https://github.com/Vishnu0074/loopin" target="_blank" rel="noopener noreferrer"><span>View<br>on GitHub</span><b>↗</b></a>
   </div>
 </section>
 
 <section class="finale">
-  <div class="finale-small">THE END IS JUST ANOTHER BEGINNING</div>
-  <h2>Keep<br><i>listening.</i></h2>
-  <a href="#top" class="back-top">Back to top ↑</a>
+  <div class="finale-small" data-aos="fade-up">LOOPIN / MUSIC</div>
+  <h2 data-letter="true">Because one<br><i>play is never enough.</i></h2>
+  <a href="#top" class="back-top" data-aos="fade-up">Back to top ↑</a>
 </section>
 </main>
 
-<footer><span>loopin®</span><span>Made for listening.</span><span>© 2026</span></footer>
+<footer><span>loopin®</span><span>Because one play is never enough.</span><span>© 2026</span></footer>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="script.js"></script>
 </body>
