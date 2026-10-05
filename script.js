@@ -15,49 +15,52 @@ window.addEventListener('pointermove', e => {
   cursor.style.transform = `translate3d(${e.clientX - 4}px,${e.clientY - 4}px,0)`;
 });
 
-const motionItems = [
-  ['.section-tag', 'fade-right'],
-  ['.statement-body', 'clip-up'],
-  ['.statement-copy p', 'fade-up'],
-  ['.text-link', 'fade-left'],
-  ['.manifesto-line', 'fade-up'],
-  ['.manifesto-word', 'zoom'],
-  ['.transition-word', 'fade-down'],
-  ['.transition-name', 'zoom'],
-  ['.transition-copy', 'fade-up'],
-  ['.feature-intro h2', 'clip-up'],
-  ['.feature-intro > p', 'fade-left'],
-  ['.feature-list article', 'clip-right'],
-  ['.app-head h2', 'clip-up'],
-  ['.app-head p', 'fade-left'],
-  ['.app-window', 'zoom'],
-  ['.big-type p', 'fade-right'],
-  ['.big-type h2', 'clip-up'],
-  ['.open-grid h2', 'clip-up'],
-  ['.open-grid p', 'fade-up'],
-  ['.round-link', 'zoom'],
-  ['.finale h2', 'zoom']
-];
+/* Letter-by-letter editorial typography */
+function splitLetters(element) {
+  if (element.dataset.splitDone) return;
+  element.dataset.splitDone = 'true';
 
-motionItems.forEach(([selector, type]) => {
-  document.querySelectorAll(selector).forEach((el, index) => {
-    el.dataset.aos = type;
-    if (index > 0) el.dataset.delay = String(Math.min(index, 6));
+  const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(node => {
+    const fragment = document.createDocumentFragment();
+    [...node.textContent].forEach(char => {
+      const span = document.createElement('span');
+      span.className = char.trim() ? 'letter' : 'letter space';
+      span.textContent = char.trim() ? char : '\u00A0';
+      fragment.appendChild(span);
+    });
+    node.parentNode.replaceChild(fragment, node);
   });
-});
+}
+
+document.querySelectorAll('[data-letter]').forEach(splitLetters);
 
 const reveal = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.classList.add('is-visible');
+    entry.target.classList.add('letters-visible');
     reveal.unobserve(entry.target);
   });
 }, {
-  threshold: .14,
-  rootMargin: '0px 0px -8% 0px'
+  threshold: .12,
+  rootMargin: '0px 0px -10% 0px'
 });
 
-document.querySelectorAll('[data-aos]').forEach(el => reveal.observe(el));
+document.querySelectorAll('[data-aos], [data-letter]').forEach((el, index) => {
+  if (el.dataset.aos === 'media') {
+    el.style.transitionDelay = '0s';
+  }
+  reveal.observe(el);
+});
+
+/* Extra stagger for letter animations */
+document.querySelectorAll('[data-letter] .letter').forEach((letter, index) => {
+  letter.style.transitionDelay = `${Math.min(index * .018, .9)}s`;
+});
 
 const songs = [...document.querySelectorAll('.song')];
 const title = document.getElementById('trackTitle');
@@ -90,12 +93,13 @@ document.getElementById('prev').addEventListener('click', () => {
   choose(songs[(index - 1 + songs.length) % songs.length]);
 });
 
+/* Scroll-linked movement */
 const parallaxItems = document.querySelectorAll('[data-parallax]');
-const legacyParallax = document.querySelectorAll('.opening-word,.manifesto-word,.big-type h2');
+const mediaItems = document.querySelectorAll('.visual-break img, .opening-media');
 
 lenis.on('scroll', ({ scroll }) => {
   parallaxItems.forEach(el => {
-    const speed = Number(el.dataset.parallax || .08);
+    const speed = Number(el.dataset.parallax || .02);
     const rect = el.getBoundingClientRect();
     if (rect.bottom > -100 && rect.top < innerHeight + 100) {
       const progress = (innerHeight / 2 - (rect.top + rect.height / 2));
@@ -103,16 +107,17 @@ lenis.on('scroll', ({ scroll }) => {
     }
   });
 
-  legacyParallax.forEach((el, i) => {
-    if (el.closest('[data-aos]') && !el.classList.contains('is-visible')) return;
+  mediaItems.forEach((el, i) => {
     const rect = el.getBoundingClientRect();
-    if (rect.bottom > 0 && rect.top < innerHeight) {
-      const shift = (innerHeight / 2 - (rect.top + rect.height / 2)) * (i % 2 ? -.025 : .018);
-      el.style.transform = `translate3d(${shift}px,0,0)`;
-    }
+    if (rect.bottom < 0 || rect.top > innerHeight) return;
+    const progress = (innerHeight / 2 - (rect.top + rect.height / 2)) / innerHeight;
+    const scale = 1 + Math.abs(progress) * .055;
+    const y = progress * (i % 2 ? -24 : 18);
+    el.style.transform = `translate3d(0,${y}px,0) scale(${scale})`;
   });
 });
 
+/* Smooth internal navigation */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const target = document.querySelector(link.getAttribute('href'));
@@ -121,3 +126,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     lenis.scrollTo(target, { offset: -40, duration: 1.35 });
   });
 });
+
+if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  lenis.stop();
+}
