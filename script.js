@@ -1,13 +1,14 @@
 document.documentElement.classList.add('js');
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const lenis = prefersReducedMotion ? null : new Lenis({
+const hasLenis = typeof window.Lenis === 'function';
+const lenis = (!prefersReducedMotion && hasLenis) ? new window.Lenis({
   autoRaf:true,
   anchors:true,
   lerp:.085,
   smoothWheel:true,
   syncTouch:true
-});
+}) : null;
 
 const cursor=document.querySelector('.cursor');
 if(cursor){
@@ -73,6 +74,7 @@ if(lenis){
 }else{
   window.addEventListener('scroll',updateParallax,{passive:true});
 }
+requestAnimationFrame(updateParallax);
 
 /* Interactive queue preview */
 const songs=[...document.querySelectorAll('.song')];
@@ -115,7 +117,10 @@ document.querySelectorAll('a[href^="#"]').forEach(link=>{
     const target=document.querySelector(selector);
     if(!target)return;
     e.preventDefault();
-    if(lenis)lenis.scrollTo(target,{offset:-35,duration:1.15});
-    else target.scrollIntoView({behavior:'smooth'});
+    if(lenis) {
+      lenis.scrollTo(target,{offset:-35,duration:1.15});
+    } else {
+      target.scrollIntoView({behavior: prefersReducedMotion ? 'auto' : 'smooth',block:'start'});
+    }
   });
 });
