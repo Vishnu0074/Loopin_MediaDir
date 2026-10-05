@@ -77,3 +77,4 @@
 .manifesto-word .letter{color:var(--paper);font-size:1em;vertical-align:baseline}
 .manifesto-word .letter:last-child{color:var(--paper)}
 .manifesto-word>span:not(.letter){color:var(--red);font-size:.3em;vertical-align:top}
+.manifesto-word>span .letter{color:var(--red);font-size:.3em;vertical-align:top}
