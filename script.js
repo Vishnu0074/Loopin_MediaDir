@@ -1,6 +1,9 @@
 const root=document.documentElement;
 const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const lenis=(!reduced&&typeof window.Lenis==='function')?new window.Lenis({autoRaf:true,anchors:true,lerp:.075,smoothWheel:true,syncTouch:true}):null;
+const touchDevice=window.matchMedia('(hover: none), (pointer: coarse)').matches;
+// Keep Lenis for desktop, but use native mobile scrolling so touch swipes retain
+// the browser's natural momentum after the finger leaves the screen.
+const lenis=(!reduced&&!touchDevice&&typeof window.Lenis==='function')?new window.Lenis({autoRaf:true,anchors:true,lerp:.075,smoothWheel:true}):null;
 
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('is-visible','letters-visible');observer.unobserve(e.target)}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal,.reveal-scale').forEach(el=>observer.observe(el));root.classList.add('motion-ready');
